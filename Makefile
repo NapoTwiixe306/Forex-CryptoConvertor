@@ -1,5 +1,3 @@
-# Makefile pour le projet ForexConvert
-
 # Compiler flags
 CC = gcc
 CFLAGS = -Wall -Wextra -pedantic -std=c99
