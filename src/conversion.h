@@ -3,4 +3,6 @@
 
 void print_hello();
 
+void display(void);
+
 #endif

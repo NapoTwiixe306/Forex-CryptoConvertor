@@ -8,7 +8,8 @@ OBJDIR = obj
 LIBDIR = lib
 
 # Object files
-OBJS = $(OBJDIR)/conversion.o $(OBJDIR)/main.o
+SRCS = $(wildcard $(SRCDIR)/*.c)
+OBJS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 
 # Library files
 LIBS = $(LIBDIR)/libhello.a
@@ -31,15 +32,10 @@ $(LIBS): $(OBJDIR)/conversion.o
 	ar rcs $(LIBS) $(OBJDIR)/conversion.o
 	@echo "\033[34mLibrary file $(LIBS) has been created.\033[0m"
 
-$(OBJDIR)/conversion.o: $(SRCDIR)/conversion.c
-	@echo "\033[33mCompiling conversion.c...\033[0m"
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo "\033[33mCompiling $<...\033[0m"
 	@sleep 0.5
-	$(CC) $(CFLAGS) -c $(SRCDIR)/conversion.c -o $(OBJDIR)/conversion.o
-
-$(OBJDIR)/main.o: $(SRCDIR)/main.c
-	@echo "\033[33mCompiling main.c...\033[0m"
-	@sleep 0.5
-	$(CC) $(CFLAGS) -c $(SRCDIR)/main.c -o $(OBJDIR)/main.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@echo "\033[31mCleaning up...\033[0m"
