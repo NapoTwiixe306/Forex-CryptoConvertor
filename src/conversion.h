@@ -3,6 +3,8 @@
 
 void print_hello();
 
-void display(void);
+void display(char choix);
+
+void welcomeMessage(void);
 
 #endif

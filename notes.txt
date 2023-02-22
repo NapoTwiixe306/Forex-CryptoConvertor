@@ -1,0 +1,8 @@
+printf("Bienvenue dans le convertisseur de devises !\n");
+printf("Entrez un montant en devise d'origine : ");
+  
+double amount;
+scanf("%lf", &amount);
+
+
+teste pour le display.c
