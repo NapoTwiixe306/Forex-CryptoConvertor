@@ -7,6 +7,8 @@
 #define BUFFER_SIZE 1024
 
 int main() {
+    print_hello();
+
     // Display available currencies
     display_currencies();
     printf("Please enter the currency you want to convert from: ");
