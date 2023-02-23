@@ -7,4 +7,6 @@ void display(char choix);
 
 void welcomeMessage(void);
 
+double convert_currency(char* from_currency, char* to_currency, double amount);
+
 #endif

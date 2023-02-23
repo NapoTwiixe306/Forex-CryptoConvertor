@@ -8,8 +8,7 @@ OBJDIR = obj
 LIBDIR = lib
 
 # Object files
-SRCS = $(wildcard $(SRCDIR)/*.c)
-OBJS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
+OBJS = $(OBJDIR)/conversion.o $(OBJDIR)/display.o $(OBJDIR)/main.o
 
 # Library files
 LIBS = $(LIBDIR)/libhello.a
@@ -17,27 +16,44 @@ LIBS = $(LIBDIR)/libhello.a
 # Binary file
 BIN = ForexConvert
 
+# Colors
+RED = \033[31m
+GREEN = \033[32m
+YELLOW = \033[33m
+BLUE = \033[34m
+NC = \033[0m
+
 # Targets
 all: $(BIN)
 
 $(BIN): $(OBJS) $(LIBS)
-	@echo "\033[32mLinking object files...\033[0m"
+	@echo "$(GREEN)Linking object files...$(NC)"
 	@sleep 0.5
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(BIN)
-	@echo "\033[32mBuild complete! Binary file is located at $(BIN).\033[0m"
+	@echo "$(GREEN)Build complete! Binary file is located at $(BIN).$(NC)"
 
 $(LIBS): $(OBJDIR)/conversion.o
-	@echo "\033[34mBuilding library file...\033[0m"
+	@echo "$(BLUE)Building library file...$(NC)"
 	@sleep 0.5
 	ar rcs $(LIBS) $(OBJDIR)/conversion.o
-	@echo "\033[34mLibrary file $(LIBS) has been created.\033[0m"
+	@echo "$(BLUE)Library file $(LIBS) has been created.$(NC)"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@echo "\033[33mCompiling $<...\033[0m"
+$(OBJDIR)/conversion.o: $(SRCDIR)/conversion.c $(SRCDIR)/conversion.h
+	@echo "$(YELLOW)Compiling conversion.c...$(NC)"
 	@sleep 0.5
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $(SRCDIR)/conversion.c -o $(OBJDIR)/conversion.o
+
+$(OBJDIR)/display.o: $(SRCDIR)/display.c $(SRCDIR)/currency.h
+	@echo "$(YELLOW)Compiling display.c...$(NC)"
+	@sleep 0.5
+	$(CC) $(CFLAGS) -c $(SRCDIR)/display.c -o $(OBJDIR)/display.o
+
+$(OBJDIR)/main.o: $(SRCDIR)/main.c $(SRCDIR)/conversion.h $(SRCDIR)/currency.h
+	@echo "$(YELLOW)Compiling main.c...$(NC)"
+	@sleep 0.5
+	$(CC) $(CFLAGS) -c $(SRCDIR)/main.c -o $(OBJDIR)/main.o
 
 clean:
-	@echo "\033[31mCleaning up...\033[0m"
+	@echo "$(RED)Cleaning up...$(NC)"
 	@sleep 0.5
 	rm -f $(OBJS) $(LIBS) $(BIN)
