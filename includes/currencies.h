@@ -1,7 +1,7 @@
 #ifndef CURRENCIES_H
 #define CURRENCIES_H
 
-#define NUM_CURRENCIES 3
+#define NUM_CURRENCIES 4
 
 struct Currency {
     char name[4];
