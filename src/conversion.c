@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "currencies.h"
-#include "conversion.h"
+#include "../includes/currencies.h"
+#include "../includes/conversion.h"
 
 #define BUFFER_SIZE 1024
 

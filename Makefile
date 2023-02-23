@@ -6,6 +6,7 @@ CFLAGS = -Wall -Wextra -pedantic -std=c99
 SRCDIR = src
 OBJDIR = obj
 LIBDIR = lib
+INCDIR = includes
 
 # Object files
 OBJS = $(OBJDIR)/conversion.o $(OBJDIR)/display.o $(OBJDIR)/main.o
@@ -38,22 +39,24 @@ $(LIBS): $(OBJDIR)/conversion.o
 	ar rcs $(LIBS) $(OBJDIR)/conversion.o
 	@echo "$(BLUE)Library file $(LIBS) has been created.$(NC)"
 
-$(OBJDIR)/conversion.o: $(SRCDIR)/conversion.c $(SRCDIR)/conversion.h
+$(OBJDIR)/conversion.o: $(SRCDIR)/conversion.c $(INCDIR)/conversion.h
 	@echo "$(YELLOW)Compiling conversion.c...$(NC)"
 	@sleep 0.5
-	$(CC) $(CFLAGS) -c $(SRCDIR)/conversion.c -o $(OBJDIR)/conversion.o
+	$(CC) $(CFLAGS) -c $(SRCDIR)/conversion.c -o $(OBJDIR)/conversion.o -I$(INCDIR)
 
-$(OBJDIR)/display.o: $(SRCDIR)/display.c $(SRCDIR)/currency.h
+$(OBJDIR)/display.o: $(SRCDIR)/display.c $(INCDIR)/currencies.h
 	@echo "$(YELLOW)Compiling display.c...$(NC)"
 	@sleep 0.5
-	$(CC) $(CFLAGS) -c $(SRCDIR)/display.c -o $(OBJDIR)/display.o
+	$(CC) $(CFLAGS) -c $(SRCDIR)/display.c -o $(OBJDIR)/display.o -I$(INCDIR)
 
-$(OBJDIR)/main.o: $(SRCDIR)/main.c $(SRCDIR)/conversion.h $(SRCDIR)/currency.h
+$(OBJDIR)/main.o: $(SRCDIR)/main.c $(INCDIR)/conversion.h $(INCDIR)/currencies.h
 	@echo "$(YELLOW)Compiling main.c...$(NC)"
 	@sleep 0.5
-	$(CC) $(CFLAGS) -c $(SRCDIR)/main.c -o $(OBJDIR)/main.o
+	$(CC) $(CFLAGS) -c $(SRCDIR)/main.c -o $(OBJDIR)/main.o -I$(INCDIR)
 
 clean:
 	@echo "$(RED)Cleaning up...$(NC)"
 	@sleep 0.5
 	rm -f $(OBJS) $(LIBS) $(BIN)
+
+re: clean all
